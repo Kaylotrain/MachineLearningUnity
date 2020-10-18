@@ -22,17 +22,8 @@ public class SceneManagment : MonoBehaviour
         rightTop = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height,depth));
         for (int i = 0; i < nPoints; i++)
         {
-            GameObject obj = Instantiate(pointPrefab, new Vector3(Random.Range(LeftBottom.x, rightTop.x), Random.Range(LeftBottom.y, rightTop.y), 2),Quaternion.identity);
-            if (obj.transform.position.x < obj.transform.position.y)
-            {
-                obj.GetComponent<MeshRenderer>().material.color = Color.red;
-                obj.tag = "1";
-            }
-            else
-            {
-                obj.GetComponent<MeshRenderer>().material.color = Color.blue;
-                obj.tag = "-1";
-            }
+            GameObject obj = Instantiate(pointPrefab);
+            initPoint(obj);
             points.Add(obj);
         }
     }
@@ -46,8 +37,30 @@ public class SceneManagment : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-  
+        if (Input.GetKeyDown(KeyCode.Space))
+            rePositionPoints();
     }
 
+    void rePositionPoints()
+    {
+        foreach(GameObject point in points)
+        {
+            initPoint(point);
+        }
+    }
     
+    void initPoint(GameObject point)
+    {
+        point.transform.position = new Vector3(Random.Range(LeftBottom.x, rightTop.x), Random.Range(LeftBottom.y, rightTop.y), 2);
+        if (point.transform.position.x < point.transform.position.y)
+        {
+            point.GetComponent<MeshRenderer>().material.color = Color.red;
+            point.tag = "1";
+        }
+        else
+        {
+            point.GetComponent<MeshRenderer>().material.color = Color.blue;
+            point.tag = "-1";
+        }
+    }
 }
