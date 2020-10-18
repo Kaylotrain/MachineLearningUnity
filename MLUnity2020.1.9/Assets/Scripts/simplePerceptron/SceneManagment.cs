@@ -23,6 +23,10 @@ public class SceneManagment : MonoBehaviour
         for (int i = 0; i < nPoints; i++)
         {
             GameObject obj = Instantiate(pointPrefab, new Vector3(Random.Range(LeftBottom.x, rightTop.x), Random.Range(LeftBottom.y, rightTop.y), 2),Quaternion.identity);
+            if (obj.transform.position.x < obj.transform.position.y)
+                obj.GetComponent<MeshRenderer>().material.color = Color.red;
+            else
+                obj.GetComponent<MeshRenderer>().material.color = Color.blue;
             points.Add(obj);
         }
     }
