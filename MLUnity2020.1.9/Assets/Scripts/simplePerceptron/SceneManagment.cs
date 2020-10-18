@@ -24,9 +24,15 @@ public class SceneManagment : MonoBehaviour
         {
             GameObject obj = Instantiate(pointPrefab, new Vector3(Random.Range(LeftBottom.x, rightTop.x), Random.Range(LeftBottom.y, rightTop.y), 2),Quaternion.identity);
             if (obj.transform.position.x < obj.transform.position.y)
+            {
                 obj.GetComponent<MeshRenderer>().material.color = Color.red;
+                obj.tag = "1";
+            }
             else
+            {
                 obj.GetComponent<MeshRenderer>().material.color = Color.blue;
+                obj.tag = "-1";
+            }
             points.Add(obj);
         }
     }
@@ -42,4 +48,6 @@ public class SceneManagment : MonoBehaviour
     {
   
     }
+
+    
 }
