@@ -8,7 +8,8 @@ public class SceneManagment : MonoBehaviour
 {
     public GameObject pointPrefab;
     public int nPoints;
-    public float lr,depth;
+    public float lr,depth,waitTime;
+    float[] inps;
     Vector2 LeftBottom,rightTop;
     List<GameObject> points;
     Perceptron p;
@@ -17,7 +18,7 @@ public class SceneManagment : MonoBehaviour
     {
         points = new List<GameObject>();
         p = new Perceptron(nPoints, lr);
-
+        inps = new float[2];
         LeftBottom = Camera.main.ScreenToWorldPoint(new Vector3(0,0,depth));
         rightTop = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height,depth));
         for (int i = 0; i < nPoints; i++)
@@ -61,6 +62,27 @@ public class SceneManagment : MonoBehaviour
         {
             point.GetComponent<MeshRenderer>().material.color = Color.blue;
             point.tag = "-1";
+        }
+    }
+
+    IEnumerator checkPoints()
+    {
+        foreach (GameObject point in points)
+        {
+            inps[0] = point.transform.position.x;
+            inps[1] = point.transform.position.y;
+            int label = p.Predict(inps);
+            int tag = int.Parse(point.tag);
+            if (label == tag )
+            {
+
+            }
+            else
+            {
+
+            }
+            p.supervisedTrain(inps, tag);
+
         }
     }
 }
